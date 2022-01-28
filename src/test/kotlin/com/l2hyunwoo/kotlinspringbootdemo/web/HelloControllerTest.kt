@@ -27,9 +27,6 @@ internal class HelloControllerTest @Autowired constructor(
 
     @Test
     fun `helloDto가 리턴된다`() {
-        // Given
-        val expected = HelloResponseDto("누누", 10000)
-
         mvc.get("/hello/dto") {
             param("name", "누누")
             param("amount", 10000.toString())

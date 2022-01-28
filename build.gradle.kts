@@ -20,7 +20,13 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.junit.jupiter:junit-jupiter:5.8.2")
+
+    // Spring Data JPA - For Mapping Data <-> Object
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    // H2 Database - InMemory DB for Local DB Testing
+    implementation("com.h2database:h2")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
