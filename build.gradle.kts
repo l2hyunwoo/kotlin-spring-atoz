@@ -29,6 +29,9 @@ dependencies {
     // Mustache
     implementation("org.springframework.boot:spring-boot-starter-mustache")
 
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

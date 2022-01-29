@@ -16,13 +16,12 @@ class PostsService(
     // Transactional 환경에서 JPA의 영속성 컨텍스트 때문에 Entity의 값을 변경하면 해당 변경분을 반영한다
     // Dirty Checking
     @Transactional
-    fun update(id: Long, requestDto: PostUpdateRequestDto): Long {
-        val post = repository.findById(id)
-            .orElseThrow { IllegalArgumentException("해당 게시글이 없습니다 id: $id") }
-
-        post.update(requestDto.title, requestDto.content)
-        return post.id
-    }
+    fun update(id: Long, requestDto: PostUpdateRequestDto) = repository.findById(id)
+        .orElseThrow { IllegalArgumentException("해당 게시글이 없습니다 id: $id") }
+        .run {
+            update(requestDto.title, requestDto.content)
+            id
+        }
 
     @Transactional
     fun findById(id: Long) = repository.findById(id)
@@ -36,11 +35,7 @@ class PostsService(
         .toList()
 
     @Transactional
-    fun delete(id: Long) {
-        // Post가 먼저 존재하는 지 확인 후 삭제
-        val posts = repository.findById(id)
-            .orElseThrow { IllegalArgumentException("해당 게시글이 없습니다 id: $id") }
-
-        repository.delete(posts)
-    }
+    fun delete(id: Long): Unit = repository.findById(id)
+        .orElseThrow { IllegalArgumentException("해당 게시글이 없습니다 id: $id") }
+        .let { repository.delete(it) }
 }
