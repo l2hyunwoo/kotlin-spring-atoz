@@ -1,18 +1,26 @@
 package com.l2hyunwoo.kotlinspringbootdemo.web
 
-import com.l2hyunwoo.kotlinspringbootdemo.web.dto.HelloResponseDto
+import com.l2hyunwoo.kotlinspringbootdemo.config.auth.AuthSecurityConfig
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.FilterType
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 
-@WebMvcTest
+// OAuth2UserConfigService를 스캔하지 않음
+@WebMvcTest(
+    controllers = [HelloController::class],
+    excludeFilters = [ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = [AuthSecurityConfig::class])]
+)
 internal class HelloControllerTest @Autowired constructor(
     private val mvc: MockMvc
 ) {
 
     @Test
+    @WithMockUser(roles = ["USER"])
     fun `문자열 hello가 리턴된다`() {
         // Given
         val expected = "hello"
@@ -26,6 +34,7 @@ internal class HelloControllerTest @Autowired constructor(
     }
 
     @Test
+    @WithMockUser(roles = ["USER"])
     fun `helloDto가 리턴된다`() {
         mvc.get("/hello/dto") {
             param("name", "누누")
