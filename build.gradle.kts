@@ -32,6 +32,9 @@ dependencies {
     // Spring Security
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
+    // Spring Session
+    implementation("org.springframework.session:spring-session-jdbc")
+
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
