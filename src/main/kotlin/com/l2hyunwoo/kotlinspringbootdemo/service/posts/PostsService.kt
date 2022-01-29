@@ -28,4 +28,10 @@ class PostsService(
     fun findById(id: Long) = repository.findById(id)
         .orElseThrow { IllegalArgumentException("해당 게시글이 없습니다 id: $id") }
         .toDto()
+
+    @Transactional
+    fun findAllDesc() = repository.findAllDesc()
+        .asSequence()
+        .map { it.toPostsListResponseDto() }
+        .toList()
 }
