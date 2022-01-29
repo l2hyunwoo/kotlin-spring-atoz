@@ -23,10 +23,13 @@ data class OAuthAttributes private constructor(
             registrationId: String?,
             userNameAttributeName: String?,
             attributes: Map<String, Any>?
-        ) = ofGoogle(
-            userNameAttributeName = userNameAttributeName,
-            attributes = attributes
-        )
+        ): OAuthAttributes {
+            if (registrationId == "naver") return ofNaver("id", attributes)
+            return ofGoogle(
+                userNameAttributeName = userNameAttributeName,
+                attributes = attributes
+            )
+        }
 
         @JvmStatic
         private fun ofGoogle(
@@ -39,5 +42,21 @@ data class OAuthAttributes private constructor(
             email = attributes?.get("email") as String? ?: "",
             picture = attributes?.get("pictures") as String? ?: ""
         )
+
+        @JvmStatic
+        private fun ofNaver(
+            userNameAttributeName: String?,
+            attributes: Map<String, Any>?
+        ): OAuthAttributes {
+            val response = (attributes?.get("response") as Map<String, Any>)
+
+            return OAuthAttributes(
+                name = response["name"] as? String ?: "",
+                email = response["email"] as String? ?: "",
+                picture = response["profile_image"] as String? ?: "",
+                attributes = response,
+                nameAttributeKey = userNameAttributeName
+            )
+        }
     }
 }
