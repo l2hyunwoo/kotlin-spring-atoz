@@ -34,4 +34,13 @@ class PostsService(
         .asSequence()
         .map { it.toPostsListResponseDto() }
         .toList()
+
+    @Transactional
+    fun delete(id: Long) {
+        // Post가 먼저 존재하는 지 확인 후 삭제
+        val posts = repository.findById(id)
+            .orElseThrow { IllegalArgumentException("해당 게시글이 없습니다 id: $id") }
+
+        repository.delete(posts)
+    }
 }

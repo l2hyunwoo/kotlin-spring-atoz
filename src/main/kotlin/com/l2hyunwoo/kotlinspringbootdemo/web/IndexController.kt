@@ -20,5 +20,8 @@ class IndexController(
     fun postsSave() = "posts-save"
 
     @GetMapping("/posts/update/{id}")
-    fun postsUpdate(@PathVariable id: Long) = "posts-update"
+    fun postsUpdate(@PathVariable id: Long, model: Model): String {
+        model.addAttribute("post", postsService.findById(id))
+        return "posts-update"
+    }
 }

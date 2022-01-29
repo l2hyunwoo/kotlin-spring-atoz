@@ -113,4 +113,22 @@ internal class PostsApiControllerTest @Autowired constructor(
             }
         }
     }
+
+    @Nested
+    @DisplayName("DELETE /api/v1/posts")
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class DeletePostTest {
+        @Test
+        fun `등록된 Post를 삭제한다`() {
+            val posts = postsRepository.save(Posts("title", "content", "author"))
+
+            val url = "http://localhost:${port}/api/v1/posts/${posts.id}"
+
+            restTemplate.delete(url, posts.id)
+
+            postsRepository.findAll().run {
+                assertThat(size).isEqualTo(0)
+            }
+        }
+    }
 }

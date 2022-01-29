@@ -17,4 +17,10 @@ class PostsApiController(
 
     @GetMapping("/api/v1/posts/{id}")
     fun findById(@PathVariable id: Long) = service.findById(id)
+
+    @DeleteMapping("/api/v1/posts/{id}")
+    fun delete(@PathVariable id: Long): Long {
+        service.delete(id)
+        return id
+    }
 }
