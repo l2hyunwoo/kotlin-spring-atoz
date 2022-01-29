@@ -25,7 +25,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     // H2 Database - InMemory DB for Local DB Testing
     implementation("com.h2database:h2")
-    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+
+    // Mustache
+    implementation("org.springframework.boot:spring-boot-starter-mustache")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
