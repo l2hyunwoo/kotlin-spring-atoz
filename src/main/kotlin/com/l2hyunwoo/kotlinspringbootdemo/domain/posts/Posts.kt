@@ -10,7 +10,7 @@ class Posts(
     @Column(columnDefinition = "TEXT")
     var content: String = "",
     val author: String = ""
-) {
+) : BaseTimeEntity() {
     @Id
     // Id의 AutoIncrement를 위해서 IDENTITY를 사용해야함
     @GeneratedValue(strategy = GenerationType.IDENTITY)
