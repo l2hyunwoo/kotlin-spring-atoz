@@ -1,5 +1,6 @@
 package com.l2hyunwoo.kotlinspringbootdemo.web
 
+import com.l2hyunwoo.kotlinspringbootdemo.config.auth.LoginUser
 import com.l2hyunwoo.kotlinspringbootdemo.config.auth.dto.SessionUser
 import com.l2hyunwoo.kotlinspringbootdemo.service.posts.PostsService
 import org.springframework.stereotype.Controller
@@ -14,9 +15,9 @@ class IndexController(
     private val httpSession: HttpSession
 ) {
     @GetMapping("/")
-    fun index(model: Model): String {
+    fun index(model: Model, @LoginUser user: SessionUser?): String {
         model.addAttribute("posts", postsService.findAllDesc())
-        (httpSession.getAttribute("user") as? SessionUser?)?.let { model.addAttribute("userName", it.name) }
+        user?.let { model.addAttribute("userName", it.name) }
         return "index"
     }
 
