@@ -40,7 +40,8 @@ class OAuthUserConfigService(
     }
 
     private fun insertOrReplaceUser(attributes: OAuthAttributes): User {
-        val user = userRepository.findByEmail(attributes.email) ?: return attributes.toEntity()
-        return user.update(attributes.name, attributes.picture).also { userRepository.save(it) }
+        val user = userRepository.findByEmail(attributes.email)
+        return (user?.update(attributes.name, attributes.picture) ?: attributes.toEntity())
+            .also { userRepository.save(it) }
     }
 }
